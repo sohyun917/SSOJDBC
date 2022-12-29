@@ -12,6 +12,9 @@ public class StudentRun {
 		StudentController sCon = new StudentController();
 		Student student = null;
 		List<Student> sList = null;
+		String studentId = "";
+		String studentName = "";
+		int result = 0;
 		done :
 		while(true) {
 			int choice = sView.mainMenu();
@@ -19,22 +22,66 @@ public class StudentRun {
 			case 1 :
 				//전체조회
 				sList = sCon.printAll();
-				sView.showAll(sList);
+				if(!sList.isEmpty()) {
+					sView.showAll(sList);					
+				}else {
+					sView.displayError("데이터가 존재하지 않습니다.");
+				}
 				break;
-			case 2 : break;
-			case 3 : break;
+			case 2 : 
+				//아이디로 조회
+				studentId = sView.inputStudentId("검색");
+				student = sCon.printOneById(studentId);
+				if(student != null) {
+					sView.showOne(student);					
+				}else {
+					sView.displayError("일치하는 데이터가 없습니다.");
+				}
+				break;
+			case 3 : 
+				//이름으로 조회
+				studentName = sView.inputStudentName("검색");
+				sList = sCon.printAllByName(studentName);
+				//sList는 절대 null이 될 수 없기 때문에(sList = new ArrayList<Student>니까 항상 객체가 생성되어있는 상태)
+				//비어있는지 아닌지 보고 출력해준다.
+				if(!sList.isEmpty()) {
+					sView.showAll(sList);					
+				}else {
+					sView.displayError("일치하는 데이터가 없습니다.");
+				}
+				break;
 			case 4 : 
 				//회원가입
 				student = sView.inputStudent();
-				int result = sCon.registerStudent(student);
+				result = sCon.registerStudent(student);
 				if(result > 0) {
 					sView.displaySuccess("가입이 완료되었습니다.");
 				}else {
 					sView.displayError("가입에 실패하였습니다.");
 				}
 				break;
-			case 5 : break;
-			case 6 : break;
+			case 5 : 
+				//회원정보수정
+				studentId = sView.inputStudentId("수정");
+				student = sCon.printOneById(studentId);
+				if(student != null) {
+					student = sView.modifyStudent(student);
+//					student.setStudentId(studentId);
+					sCon.modifyStudent(student);
+				}else {
+					sView.displayError("일치하는 학생이 없습니다.");
+				}
+				break;
+			case 6 : 
+				//회원탈퇴
+				studentId = sView.inputStudentId("삭제");
+				result = sCon.removeStudent(studentId);
+				if(result > 0) {
+					sView.displaySuccess("탈퇴 완료");
+				}else {
+					sView.displayError("탈퇴되지 않았습니다.");
+				}
+				break;
 			case 0 : 
 				//프로그램 종료
 				break done;
