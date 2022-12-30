@@ -6,6 +6,7 @@ import java.util.Scanner;
 import com.kh.jdbc.day02.member.model.vo.Member;
 //142365순으로 만들어보자
 public class MemberView {
+	Scanner sc = new Scanner(System.in);
 	public int mainMenu() {
 		System.out.println("====== 회원관리 프로그램 ======");
 		System.out.println("1. 회원전체조회");
@@ -14,8 +15,9 @@ public class MemberView {
 		System.out.println("4. 회원가입");
 		System.out.println("5. 회원 정보 수정");
 		System.out.println("6. 회원 탈퇴");
+		System.out.println("7. 로그인");
 		System.out.println("0. 프로그램 종료");
-		Scanner sc = new Scanner(System.in);
+		//Scanner sc = new Scanner(System.in);
 		System.out.print("메뉴 선택 : ");
 		int choice = sc.nextInt();
 		return choice;
@@ -40,7 +42,7 @@ public class MemberView {
 
 	public Member insertMember() {
 		System.out.println("====== 회원가입 ======");
-		Scanner sc = new Scanner(System.in);
+		//Scanner sc = new Scanner(System.in);
 		System.out.print("아이디 : ");
 		String memberId = sc.next();
 		System.out.print("비밀번호 : ");
@@ -64,11 +66,72 @@ public class MemberView {
 		return member;
 	}
 	
-	public void displaySuccess() {
-		System.out.println("[서비스 성공] :");
+	public void displaySuccess(String message) {
+		System.out.println("[서비스 성공] :" + message);
 	}
 	
-	public void displayError() {
-		System.out.println("[서비스 실패] : ");
+	public void displayError(String message) {
+		System.out.println("[서비스 실패] : " + message);
 	}
+	
+	public String inputMemberId(String message) {
+		System.out.print(message + "할 아이디 : ");
+		String memberId = sc.next();
+		return memberId;
+	}
+	
+	public void showOne(Member member) {
+		System.out.println("====== 아이디조회결과 ======");
+		System.out.println("아이디 : " + member.getMemberId());
+		System.out.println("비밀번호 : " + member.getMemberPwd());
+		System.out.println("이름 : " + member.getMemberName());
+		System.out.println("성별 : " + member.getMemberGender());
+		System.out.println("나이 : " + member.getMemberAge());
+		System.out.println("이메일 : " + member.getMemberEmail());
+		System.out.println("전화번호 : " + member.getMemberPhone());
+		System.out.println("주소 : " + member.getMemberAddress());
+		System.out.println("취미 : " + member.getMemberHobby());
+		System.out.println("가입날짜 : " + member.getMemberDate());
+		System.out.println("----------------------------------");
+		}
+	
+	public String inputMemberName() {
+		System.out.print("검색할 이름 : ");
+		String memberName = sc.next();
+		return memberName;
+	}
+	
+	public Member modifyMember(Member member) {
+		System.out.print("수정할 비밀번호 : ");
+		String memberPwd = sc.next();
+		System.out.print("수정할 이메일 : ");
+		String memberEmail = sc.next();
+		System.out.print("수정할 전화번호 : ");
+		String memberPhone = sc.next();
+		System.out.print("수정할 주소 : ");
+		sc.nextLine();
+		String memberAddress = sc.nextLine();
+		System.out.print("수정할 취미 : ");
+		String memberHobby = sc.next();
+		member.setMemberPwd(memberPwd);
+		member.setMemberEmail(memberEmail);
+		member.setMemberPhone(memberPhone);
+		member.setMemberAddress(memberAddress);
+		member.setMemberHobby(memberHobby);
+		return member;
+	}
+	
+	public Member inputLoginInfo() {
+		System.out.println("====== 로그인정보입력 ======");
+		System.out.print("아이디 : ");
+		String memberId = sc.next();
+		System.out.print("비밀번호 : ");
+		String memberPwd = sc.next();
+		//두개를 따로 return할 순 없다. 따라서 참조변수에 담아서 보낸다.
+		Member member = new Member();
+		member.setMemberId(memberId);
+		member.setMemberPwd(memberPwd);
+		return member;
+	}
+	
 }
