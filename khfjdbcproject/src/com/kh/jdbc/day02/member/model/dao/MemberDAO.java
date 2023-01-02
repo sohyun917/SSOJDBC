@@ -128,16 +128,18 @@ public class MemberDAO {
 	}
 
 	public List<Member> selectAllByName(String memberName) {
-		String sql = "SELECT * FROM MEMBER_TBL WHERE MEMBER_NAME = '"+memberName+"'";
+		String sql = "SELECT * FROM MEMBER_TBL WHERE MEMBER_NAME LIKE ?";
 		List<Member> mList = null;
-		Member member = null;
+		//Member member = null;
 		try {
 			Class.forName(DRIVER_NAME);
 			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-			Statement stmt = conn.createStatement();
-			ResultSet rset = stmt.executeQuery(sql);
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%"+memberName+"%");
+			ResultSet rset = pstmt.executeQuery();
 			mList = new ArrayList<Member>();
 			while(rset.next()) {
+				Member member = new Member();
 				member.setMemberId(rset.getString("MEMBER_ID"));
 				member.setMemberPwd(rset.getString("MEMBER_PWD"));
 				member.setMemberName(rset.getString("MEMBER_NAME"));
@@ -152,7 +154,7 @@ public class MemberDAO {
 				
 			}
 			conn.close();
-			stmt.close();
+			pstmt.close();
 			rset.close();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

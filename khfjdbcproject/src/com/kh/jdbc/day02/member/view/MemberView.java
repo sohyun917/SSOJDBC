@@ -134,4 +134,6 @@ public class MemberView {
 		return member;
 	}
 	
+
+	
 }
