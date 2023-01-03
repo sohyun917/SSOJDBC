@@ -7,6 +7,10 @@ import com.kh.jdbc.day03.member.model.vo.Member;
 //142365순으로 만들어보자
 public class MemberView {
 	Scanner sc = new Scanner(System.in);
+	/**
+	 * 메인메뉴 View
+	 * @return choice
+	 */
 	public int mainMenu() {
 		System.out.println("====== 회원관리 프로그램 ======");
 		System.out.println("1. 회원전체조회");
@@ -22,7 +26,10 @@ public class MemberView {
 		int choice = sc.nextInt();
 		return choice;
 	}
-	
+	/**
+	 * 회원전체조회 View
+	 * @param mList
+	 */
 	public void showAllMember(List<Member> mList) {
 		System.out.println("====== 회원전체조회 ======");
 		for(Member mOne : mList) {
@@ -39,7 +46,10 @@ public class MemberView {
 			System.out.println("----------------------------------");
 		}
 	}
-
+	/**
+	 * 회원가입 View
+	 * @return
+	 */
 	public Member insertMember() {
 		System.out.println("====== 회원가입 ======");
 		//Scanner sc = new Scanner(System.in);
@@ -65,21 +75,34 @@ public class MemberView {
 		Member member = new Member(memberId, memberPwd, memberName, memberGender, memberAge, memberEmail, memberPhone, memberAddress, memberHobby, null);
 		return member;
 	}
-	
+	/**
+	 * 성공메세지 View
+	 * @param message
+	 */
 	public void displaySuccess(String message) {
 		System.out.println("[서비스 성공] :" + message);
 	}
-	
+	/**
+	 * 실패메세지 View
+	 * @param message
+	 */
 	public void displayError(String message) {
 		System.out.println("[서비스 실패] : " + message);
 	}
-	
+	/**
+	 * 아이디입력 View
+	 * @param message
+	 * @return memberId
+	 */
 	public String inputMemberId(String message) {
 		System.out.print(message + "할 아이디 : ");
 		String memberId = sc.next();
 		return memberId;
 	}
-	
+	/**
+	 * 아이디로 조회 View
+	 * @param member
+	 */
 	public void showOne(Member member) {
 		System.out.println("====== 아이디조회결과 ======");
 		System.out.println("아이디 : " + member.getMemberId());
@@ -94,13 +117,20 @@ public class MemberView {
 		System.out.println("가입날짜 : " + member.getMemberDate());
 		System.out.println("----------------------------------");
 		}
-	
+	/**
+	 * 이름검색 View
+	 * @return memberName
+	 */
 	public String inputMemberName() {
 		System.out.print("검색할 이름 : ");
 		String memberName = sc.next();
 		return memberName;
 	}
-	
+	/**
+	 * 회원정보수정 View
+	 * @param memberId
+	 * @return Member
+	 */
 	public Member modifyMember(String memberId) {
 		Member member = new Member();
 		member.setMemberId(memberId); 		//꼭 적어야해!
@@ -122,7 +152,10 @@ public class MemberView {
 		member.setMemberHobby(memberHobby);
 		return member;
 	}
-	
+	/**
+	 * 로그인 View
+	 * @return Member
+	 */
 	public Member inputLoginInfo() {
 		System.out.println("====== 로그인정보입력 ======");
 		System.out.print("아이디 : ");
